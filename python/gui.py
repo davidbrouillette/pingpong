@@ -1,13 +1,28 @@
 from guizero import App, Text, Picture
 
-app = App(title="PingPong", layout="grid")
+class GUI_MATCH:
+    def __init__(self, app):
+        self.app = app
+        self.app.bg = "lightgrey"
+        app.title = "Ping Pong"
+        self.playerOneScore = Text(self.app, text="0", size=200, font="Times New Roman", color="blue", grid=[0,0])
+        self.playerTwoScore = Text(self.app, text="0", size=200, font="Times New Roman", color="blue", grid=[1,0])
 
-playerOneScore = Text(app, value="13", size=40, font="times New Roman", color="lightblue", grid=[0,0])
-playerTwoScore = Text(app, value="17", size=40, font="Times New Roman", color="lightblue", grid=[1,0])
+        self.playerOneServe = Text(self.app, text="<--", size=150, font="Times New Roman", color="black", grid=[0,1])
+        self.playerTwoServe = Text(self.app, text="-->", size=150, font="Times New Roman", color="lightgrey", grid=[1,1])
 
-playerOneServe = Text(app, value="<--", size=20, font="Times New Roman" color="black", grid=[0,1])
-playerTwoServe = Text(app, value="-->", size=20, font="Times New Roman" color="lightgrey", grid=[0,1])
-# playerOneServe = Picture(app, "")
-# playerTwoServe = Picture(app, "")
+    def start(self):
+        self.app.display()
 
-app.display()
+    def updateGUI(self, server, player1Score, player2Score):
+        self.playerOneScore.value = player1Score
+        self.playerTwoScore.value = player2Score
+
+        if server == 'player1':
+            self.playerOneServe.text_color = 'black'
+            self.playerTwoServe.text_color = 'lightgrey'
+        else:
+            self.playerOneServe.text_color = 'lightgrey'
+            self.playerTwoServe.text_color = 'black'
+            
+        self.app.update()

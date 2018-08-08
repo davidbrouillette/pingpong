@@ -16,9 +16,9 @@ app.get('/', (request,response)=>{
 });
 
 app.post('/saveGame', (request, response) =>{
-    const newGame = new Game(response.body);
+    //const newGame = new Game(response.body);
 
-    fs.appendFileSync('games.json', JSON.stringify(newGame));
+    fs.appendFileSync('games.json', JSON.stringify(response.body));
 
     response.json({"success":"true"});
 });

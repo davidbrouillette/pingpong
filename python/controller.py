@@ -1,76 +1,47 @@
-import os
 import pygame
+import threading
+from BitdoKeyMappings import BITDO_KEY_MAPPINGS_JOYBUTTON, BITDO_KEY_MAPPINGS_JOYAXIS, parseButton
 
-class Controller(object):
-    button_data = None
-    hat_data = None
-
-    def init(self):
-        self.button_data 
-        self.hat_data
+class Controller:
+    def __init__(self, name, id, keyMapping):
+        self.button_data = None
+        self.hat_data = None
+        self.done = True
+        self.controllerInstance = None
+        self.name = name
+        self.keyMapping = keyMapping
+        self.thread = threading.Thread(target=self.listenLoop)
+        
+        self.controllerInstance = pygame.joystick.Joystick(id)
+        self.controllerInstance.init()
+        if not self.button_data:
+            self.button_data = {}
+            for i in range(self.controllerInstance.get_numbuttons()):
+                self.button_data[i] = False
+                
+        if not self.hat_data:
+            self.hat_data = {}
+            for i in range(self.controllerInstance.get_numhats()):
+                self.hat_data[i] = (0,0)
     
     def listen(self):
-        for x in range(pygame.joystick.get_count()):    
-            self.controller = pygame.joystick.Joystick(x)
-            self.controller.init()
-            if not self.button_data:
-                self.button_data = {}
-                for i in range(self.controller.get_numbuttons()):
-                    self.button_data[i] = False
-            
-            if not self.hat_data:
-                self.hat_data = {}
-                for i in range(self.controller.get_numhats()):
-                    self.hat_data[i] = (0,0)
-            done = true
-            while done:
-                for event in pygame.event.get():
-                    if event.type == pygame.JOYBUTTONDOWN:
-                        self.button_data[event.button] = True
-                    if event.type == pygame.JOYBUTTONFALSE:
-                        self.button_data[event.button] = False
-                    if event.type == pygame.JOYHATMOTION:
-                        self.hat_data[event.hat] = event.value
-                    
-                    print(self.button_data)
-                    print(self.hat_data)
-                    joystick_count = pygame.joystick.get_count()
-                    print(joystick_count)
+        self.thread.setDaemon(True)
+        self.thread.start()
     
+    def listenLoop(self):
+        while self.done:
+            for event in pygame.event.get():
+                button = parseButton(event)
+                if button in self.keyMapping and self.keyMapping[button] is not None:
+                    self.keyMapping[button](self.name, event)
+##                if event.type == pygame.JOYBUTTONDOWN:
+##                    self.button_data[event.button] = True
+##                if event.type == pygame.JOYBUTTONUP:
+##                    self.button_data[event.button] = False
+##                if event.type == pygame.JOYHATMOTION:
+##                    self.hat_data[event.hat] = event.value
 
-pygame.init()
-
-pygame.display.set_mode([200,200])
-pygame.display.set_caption("pingpong")
-pygame.joystick.init()
-
-button_data = None
-hat_data = None
-
-
-for x in range(pygame.joystick.get_count()):    
-    controller = pygame.joystick.Joystick(x)
-    controller.init()
-    if not button_data:
-        button_data = {}
-        for i in range(controller.get_numbuttons()):
-            button_data[i] = False
-    
-    if not hat_data:
-        hat_data = {}
-        for i in range(controller.get_numhats()):
-            hat_data[i] = (0,0)
-    done = True
-    while done:
-        for event in pygame.event.get():
-            if event.type == pygame.JOYBUTTONDOWN:
-                button_data[event.button] = True
-            if event.type == pygame.JOYBUTTONUP:
-                button_data[event.button] = False
-            if event.type == pygame.JOYHATMOTION:
-                hat_data[event.hat] = event.value
-            
-            print(event)
+                
 
 
 

@@ -1,42 +1,62 @@
-from match import Match
-from time import sleep
-from guizero import App, Text, Picture
-from gui import GUI_MATCH
-from GUI_GET_FIRST_SERVER import GUI_GET_FIRST_SERVER
-from bluetoothControllerAdapter import ControllerR, RunEventLoop, A_BTN, GetRawInput
+import pygame
+import os
+import threading
+from player import Player
+from controller import Controller
+from BitdoKeyMappings import initMapping
 
-def updateGame(guiMatch, match, player):
-    match.scorePoint(player)
-    guiMatch.updateGUI(match.currentServer, match.score['player1'], match.score['player2'])
-
-def mainLoop(app, getServer):
-    currentMatch = Match(getServer.firstServer,11,5)
-    guiMatch = GUI_MATCH(app)
-    guiMatch.updateGUI(currentMatch.currentServer, currentMatch.score['player1'], currentMatch.score['player2'])
-    updateOnScore = lambda player: updateGame(guiMatch, currentMatch, player)
-    RunEventLoop(updateOnScore) 
+def buttonFn(score):
+    fn = lambda: score = score + 1
+    return fn
 
 def PingPong():
     try:
-        app = App(title='Ping Pong', layout="grid", bg="lightgrey", height="720", width="1280")
-        getServer = GUI_GET_FIRST_SERVER(app)
+        player1 = Player("player1", 0)
+        player2 = Player("player2", 1)
         
-        while getServer.firstServer == "":
-            app.update()
+        pygame.init()
+        pygame.joystick.init()
+        score = 0
+        player1KeyMapping = initMapping()
+        player1KeyMapping["rshoulder"] = buttonFn(score)
+        player2KeyMapping = initMapping()
+        player2KeyMapping["rshoulder"] = buttonFn(score)
+
+        playerController1 = Controller(player1.name, player1.controllerId, player1KeyMapping)
+        playerController2 = Controller(player2.name, player2.controllerId, player2KeyMapping)
         
-        mainLoop(app, getServer)
+                
         
-        app.display()
+        pygame.display.set_caption("HI!")
+        clock = pygame.time.Clock()
+        screen = pygame.display.set_mode([700,400], pygame.NOFRAME)
+        screen.fill((135,180,210))
+        text = pygame.font.Font(None, 100)
+        textArea = text.render("HELLO!", True, (255,255,255))
+        rect = textArea.get_rect(center=(160,120))
+        screen.blit(textArea, rect)
+        pygame.display.update()
+        
+        
+        playerController1.listen()
+        playerController2.listen()
+        
+##        Thread_playerController1 = threading.Thread(target=playerController1.listen)
+##        Thread_playerController2 = threading.Thread(target=playerController2.listen)
+##        Thread_playerController1.setDaemon(True)
+##        Thread_playerController1.start()
+##        Thread_playerController2.setDaemon(True)
+##        Thread_playerController2.start()
+##        
         
 
     except KeyboardInterrupt:
         print("Closing Ping Pong Protocol...")
+        pygame.quit()
         exit(0)
 
 
 PingPong()
 
-
-#GetRawOutput()
 
     

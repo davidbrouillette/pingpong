@@ -1,17 +1,16 @@
 import pygame
 
-class Player:
-    def __init__(self, name, controllerId, x, y):
-        self.name = name
-        self.controllerId = controllerId
-        self.textFunc = None
+class TextObject:
+    def __init__(self, id, text, x, y, fontSize=50):
+        self.id = id
         self.pos = (x,y)
-        self.color = (219,204,161)
-        self.font = pygame.font.SysFont("lato", 175, True)
-        self.bounds = self.getSurface("0")
+        self.text = text
+        self.color = (255,117,73)
+        self.font = pygame.font.SysFont("lato", fontSize, True)
+        self.bounds = self.getSurface(self.text)
         
     def draw(self, surface, centralized=False):
-        textSurface, self.bounds = self.getSurface(str(self.textFunc(self.name)))
+        textSurface, self.bounds = self.getSurface(self.text)
         pos = (self.pos[0] - self.bounds.width // 2, self.pos[1])
         surface.blit(textSurface, pos)
         

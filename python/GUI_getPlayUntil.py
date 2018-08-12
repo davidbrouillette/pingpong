@@ -22,6 +22,10 @@ def GUI_getPlayUntil(keyMapping):
     running = True
     while running:
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                running = False
+                pygame.quit()
+                break;
             if event.type == pygame.JOYBUTTONDOWN:
                 button = parseButton(event)
                 if button in keyMapping and keyMapping[button] is not None:

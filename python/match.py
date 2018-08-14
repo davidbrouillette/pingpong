@@ -39,21 +39,13 @@ class Match:
         print("")
 
     def scorePoint(self, playerId):
-        name = ""
-        if playerId == self.player1.controllerId:
-            name = self.player1.name
-        else:
-            name = self.player2.name
-        print("ScorePoint: " + name + " ")
-        print("Scores: ")
-        print(self.score)
-        print("")
-        
-        self.score[name] = self.score[name] + 1
+        self.score[playerId] = self.score[playerId] + 1
         self.numberOfServes = self.numberOfServes + 1
-        self.checkScores(name)
+        self.checkScores(playerId)
         self.checkServes()
-        return name, self.score
+        print("after Scores: ")
+        print(self.score)
+        return self.score
 
     def checkScores(self, name):
         if self.score[name] == self.pointsInMatch:

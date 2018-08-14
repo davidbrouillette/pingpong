@@ -11,6 +11,7 @@ from textObject import TextObject
 from GUI_getPlayUntil import GUI_getPlayUntil
 from GUI_getFirstServer import GUI_getFirstServer
 from GUI_gameOver import GUI_gameOver
+from GUI_mainLoop import GUI_mainLoop
 
 class PingPong:
     def __init__(self):
@@ -60,37 +61,17 @@ class PingPong:
         print("First Server selected: " + str(self.firstServer))
         
         pygame.display.init()
+
         
-        player1 = Player("player1", 0, 200, 25)
-        player2 = Player("player2", 1, 500, 25)
-        self.currentMatch = Match(player1, player2, self.firstServer, self.numberOfServes, 5)
-        player1.textFunc = self.currentMatch.getScore
-        player2.textFunc = self.currentMatch.getScore
-        serveIndicatorPlayer1 = ServeIndicator("player1", "<--", 175, 200, self.currentMatch.isCurrentServer)
-        serveIndicatorPlayer2 = ServeIndicator("player2", "-->", 525, 200, self.currentMatch.isCurrentServer)
-        
-        self.eightBitdoKeyMappingPlayer2 = initMapping()
-        self.eightBitdoKeyMappingPlayer2["rshoulder"] = self.buttonFn(self.currentMatch.scorePoint)
-        self.eightBitdoKeyMappingPlayer2["lshoulder"] = lambda x,y: self.currentMatch.subtractPoint(x)
-        self.eightBitdoKeyMappingPlayer1 = initMapping()
-        self.eightBitdoKeyMappingPlayer1["lshoulder"] = self.buttonFn(self.currentMatch.scorePoint)
-        self.eightBitdoKeyMappingPlayer1["rshoulder"] = lambda x,y: self.currentMatch.subtractPoint(x)
-        
-        self.gui = GUI()
-        self.gui.addGUIObject(player1)
-        self.gui.addGUIObject(player2)
-        self.gui.addGUIObject(serveIndicatorPlayer1)
-        self.gui.addGUIObject(serveIndicatorPlayer2)
-        self.gui.setupGUI()
         
     def startGame(self):
-        MainLoop(self.running, self.eightBitdoKeyMappingPlayer1, self.eightBitdoKeyMappingPlayer2, self.gui, self.currentMatch)
+        GUI_mainLoop(self.firstServer, self.numberOfServes)
         
-        mapping_gameOver = initMapping()
-        mapping_gameOver["rshoulder"] = lambda x: self.setPlayAgain(True)
-        mapping_gameOver["lshoulder"] = lambda x: self.setPlayAgain(False)
+        #mapping_gameOver = initMapping()
+        #mapping_gameOver["rshoulder"] = lambda x: self.setPlayAgain(True)
+        #mapping_gameOver["lshoulder"] = lambda x: self.setPlayAgain(False)
         
-        GUI_gameOver(mapping_gameOver, self.currentMatch.winner, self.currentMatch.score)
+        #GUI_gameOver(mapping_gameOver, self.currentMatch.winner, self.currentMatch.score)
         pygame.display.quit()
     
     def addScore(self, fn, name, event):

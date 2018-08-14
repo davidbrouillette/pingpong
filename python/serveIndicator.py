@@ -6,6 +6,7 @@ class ServeIndicator:
         self.pos = (x,y)
         self.icon = icon
         self.color = (255,117,73)
+        self.servingColor = (255,117,73)
         self.notServingColor = (200,199,211)
         self.colorFunc = colorFunc
         self.font = pygame.font.SysFont("lato", 150, True)

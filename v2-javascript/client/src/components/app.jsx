@@ -1,5 +1,6 @@
 import React from 'react';
 import Score from './score.jsx';
+import wpi from 'wiring-pi';
 import "./app.css";
 
 class App extends React.Component{
@@ -30,6 +31,21 @@ class App extends React.Component{
         });
     }
 
+	componentDidMount(){
+		wpi.setup('wpi');
+		var pin = 4;
+		wpi.pinMode(pin, wpi.IN);
+		wpi.pullUpDnControl(pin, wpi.PUD_UP)
+
+		while(true){
+		
+			buttonPressed = wpi.input(4);
+			if(!buttonPressed){
+				alert("buttonpressed");
+			}
+		}
+	}
+	
     render(){
         return (
             <div className="app-container">

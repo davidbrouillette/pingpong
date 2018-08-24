@@ -1,0 +1,36 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    background-color: lightgrey;
+}
+
+
+.app-container{
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 25px 100px;
+}
+
+.scores-container{
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.score-component{
+    display: block;
+    height: 100%;
+    font-size: 500px;
+}

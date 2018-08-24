@@ -1,0 +1,38 @@
+{
+  "name": "pingpong-server",
+  "version": "0.0.1",
+  "description": "pingpong server",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-core": "^7.0.0-0",
+    "@babel/cli": "7.0.0-rc.3",
+    "@babel/core": "7.0.0-rc.3",
+    "@babel/runtime": "7.0.0-rc.3",
+    "@babel/preset-env": "7.0.0-rc.3",
+    "@babel/preset-flow": "7.0.0-rc.3",
+    "@babel/preset-stage-3": "7.0.0-rc.3",
+    "@babel/preset-stage-2": "7.0.0-rc.3",
+    "@babel/plugin-proposal-decorators": "7.0.0-rc.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "7.0.0-rc.3",
+    "@babel/plugin-proposal-optional-chaining": "7.0.0-rc.3",
+    "@babel/plugin-syntax-decorators": "7.0.0-rc.3",
+    "@babel/plugin-syntax-flow": "7.0.0-rc.3",
+    "@babel/plugin-syntax-nullish-coalescing-operator": "7.0.0-rc.3",
+    "babel-eslint": "8.2.2",
+    "babel-jest": "22.4.1",
+    "chalk": "2.3.2",
+    "eslint": "4.18.2",
+    "eslint-plugin-flowtype": "2.46.1",
+    "eslint-plugin-import": "2.9.0",
+    "fs-extra": "5.0.0",
+    "jest": "22.1.4"
+  },
+  "dependencies": {
+    "express": "4.16.3",
+    "chalk":"2.4.1",
+    "morgan":"1.9.0"
+  }
+}

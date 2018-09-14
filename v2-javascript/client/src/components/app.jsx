@@ -1,19 +1,43 @@
 import React from 'react';
 import Score from './score.jsx';
-import wpi from 'wiring-pi';
 import "./app.css";
+import io from 'socket.io-client';
 
 class App extends React.Component{
     constructor(props){
         super(props);
-
+		
         this.state = {
             score1: 0,
-            score2: 0
+            score2: 0,
+            socket: null
         }
 
         this.addPoint = this.addPoint.bind(this);
     }
+    
+    componentWillMount(){
+		const socket = io('http://localhost:1337');
+		socket.on('connected', (data) => {
+			console.log(`from server through socketio: ${JSON.stringify(data)}`);
+		});
+		socket.on('buttonPressed', (data) => {
+			console.log(`In buttonPressed event: ${data}`);
+			if(data === "button1"){
+				this.setState({
+					score1: this.state.score1 + 1
+				});
+			} else if(data === "button2"){
+				this.setState({
+					score2: this.state.score2 + 1
+				});
+			}
+		});
+		
+		this.setState({
+			socket:socket
+		});
+	}
 
     addPoint(e){
         let newP1Score = this.state.score1;
@@ -30,21 +54,6 @@ class App extends React.Component{
             score2: newP2Score
         });
     }
-
-	componentDidMount(){
-		wpi.setup('wpi');
-		var pin = 4;
-		wpi.pinMode(pin, wpi.IN);
-		wpi.pullUpDnControl(pin, wpi.PUD_UP)
-
-		while(true){
-		
-			buttonPressed = wpi.input(4);
-			if(!buttonPressed){
-				alert("buttonpressed");
-			}
-		}
-	}
 	
     render(){
         return (

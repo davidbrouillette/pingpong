@@ -9,6 +9,7 @@ html, body{
     height: 100%;
     width: 100%;
     background-color: lightgrey;
+	font-family: 'Kosugi', sans-serif;
 }
 
 
@@ -17,7 +18,7 @@ html, body{
     display: block;
     height: 100%;
     width: 100%;
-    padding: 25px 100px;
+    padding: 25px;
 }
 
 .scores-container{
@@ -32,5 +33,5 @@ html, body{
 .score-component{
     display: block;
     height: 100%;
-    font-size: 500px;
+    font-size: 300px;
 }

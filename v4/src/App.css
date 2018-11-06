@@ -1,0 +1,35 @@
+
+html, body{
+    height: 100%;
+    width: 100%;
+    background-color: #1a237e;
+}
+
+.react-root-element{
+    height: 100%;
+}
+
+.App {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.activegame-component{
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.activegame-container{
+    height: 90%;
+}
+
+.score-container{
+    height: 100%;
+}
+
+.score-container .score{
+    height: 100%;
+}
